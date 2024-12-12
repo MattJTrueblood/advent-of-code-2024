@@ -11,7 +11,7 @@
 
 using namespace std;
 
-static const bool PART_2_ENABLED = false;
+static const bool PART_2_ENABLED = true;
 
 // find the number of times a substr appears in a string
 int countOccurancesInString(string str, string substr) {
@@ -104,9 +104,65 @@ vector<string> getAllGridLines(vector<string> lines) {
     return allGridLines;
 }
 
+bool xmasAtTile(int row, int col, vector<string> &lines) {
+    // 4 possible configurations of x-mas
+    //
+    //     M M   M S   S S   S M
+    //      A     A     A     A
+    //     S S   M S   M M   S M
+    //
+    // assume lines[row+2][col+2] is in bounds
+
+    //configuration 1
+    if( lines[row][col] == 'M' &&
+        lines[row+1][col+1] == 'A' &&
+        lines[row+2][col] == 'S' &&
+        lines[row][col+2] == 'M' &&
+        lines[row+2][col+2] == 'S' ) {
+            return true;
+        }
+    
+    //configuration 2
+    if( lines[row][col] == 'M' &&
+        lines[row+1][col+1] == 'A' &&
+        lines[row+2][col] == 'M' &&
+        lines[row][col+2] == 'S' &&
+        lines[row+2][col+2] == 'S' ) {
+            return true;
+        }
+
+    //configuration 3
+    if( lines[row][col] == 'S' &&
+        lines[row+1][col+1] == 'A' &&
+        lines[row+2][col] == 'M' &&
+        lines[row][col+2] == 'S' &&
+        lines[row+2][col+2] == 'M' ) {
+            return true;
+        }
+
+    //configuration 4
+    if( lines[row][col] == 'S' &&
+        lines[row+1][col+1] == 'A' &&
+        lines[row+2][col] == 'S' &&
+        lines[row][col+2] == 'M' &&
+        lines[row+2][col+2] == 'M' ) {
+            return true;
+        }
+    
+    return false;
+}
+
 long long part2(vector<string> lines) {
-    // TODO
-    return -1;
+    long long count = 0;
+    for(int row = 0; row < lines.size() - 2; row++) {
+        for(int col = 0; col < lines[0].size() - 2; col++) {
+            if(xmasAtTile(row, col, lines)) {
+                count++;
+            }
+        }
+    }
+
+    return count;
 }
 
 long long part1(vector<string> lines) {
