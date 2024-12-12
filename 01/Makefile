@@ -2,7 +2,7 @@
 
 build:
 	@echo "Building..."
-	g++ -o solution solution.cpp ../utils/util.cpp -I../utils
+	g++-11 -std=c++17 -o solution solution.cpp ../utils/util.cpp -I../utils
 
 run:
 	@if [ -z "$(file)" ]; then \
